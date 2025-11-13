@@ -1,0 +1,113 @@
+---
+title: "Installation Guide"
+description: "Step-by-step instructions to install Valdi, covering pip installation and any platform-specific notes. Finish this page with a quick verification to confirm Valdi is properly installed."
+---
+
+# Installation Guide
+
+Installing Valdi is a straightforward process designed to get you up and running quickly with minimal fuss. This guide provides clear, actionable instructions for installing Valdi using Python's package manager, pip, and highlights platform-specific considerations to ensure a smooth setup. By the end, you'll verify that Valdi is correctly installed and ready for your first validation.
+
+## Before You Begin
+
+To install Valdi successfully, make sure your development environment meets the following prerequisites. Valdi requires Python 3.7 or higher, as it depends on modern Python features for performance and compatibility. It's also important that pip is up to date, as older versions may not resolve dependencies correctly. If you are using a virtual environment, this is the ideal place to install Valdi to avoid conflicts with other packages.
+
+Certain platform-specific considerations apply—Windows users may need to ensure Python and pip are added to their system PATH, while Linux and macOS users should verify that your system’s Python installation is accessible from the command line.
+
+For detailed prerequisites and environment setup, see [Prerequisites and Requirements](/getting-started/setup-and-installation/prerequisites-and-requirements).
+
+## Installing Valdi
+
+The recommended and official installation method is via pip. This approach suits most environments and guarantees the latest stable release.
+
+<Steps>
+<Step title="Upgrade pip to the latest version">
+Before installing, ensure pip is up to date to avoid install issues:
+
+```bash
+python3 -m pip install --upgrade pip
+```
+This updates pip; you should see a confirmation message ending with “Successfully installed pip-x.y.z”.
+</Step>
+<Step title="Install Valdi with pip">
+Run the following command to install Valdi:
+
+```bash
+pip install valdi
+```
+This command downloads and installs Valdi and its dependencies. Expect output showing progress through the package list.
+</Step>
+<Step title="Verify the installation">
+Check that Valdi was installed correctly by querying its version:
+
+```bash
+valdi --version
+```
+You should see the installed version number displayed, confirming the installation.
+</Step>
+</Steps>
+
+### Platform Notes
+
+Windows users using PowerShell may need to prepend commands with `python -m` instead of just `python`. For example:
+
+```powershell
+python -m pip install valdi
+```
+
+On macOS or Linux, if you encounter permissions errors, running the install command with `--user` flag:
+
+```bash
+pip install --user valdi
+```
+
+avoids modifying system-wide Python directories and resolves such issues without using `sudo`.
+
+## Configuration Basics
+
+After installing, Valdi operates with sensible defaults enabling immediate use. However, you can customize behavior by placing a configuration file named `valdi.yaml` or `valdi.json` in your project root. This file controls validation rules, output formats, and runtime options.
+
+A minimal, functional `valdi.yaml` might look like this:
+
+```yaml
+validation:
+  rules:
+    - rule: basic_syntax_check
+output:
+  format: json
+```
+
+The configuration guides Valdi’s first validation runs and can be adjusted incrementally as you explore advanced features.<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "config/valdi.yaml", "range": "1-15"}]} />
+
+## Your First Validation Run
+
+Once installed and optionally configured, you can run a quick validation task to ensure everything functions properly.
+
+If you have a file named `sample.txt` you want to validate, run:
+
+```bash
+valdi validate sample.txt
+```
+
+You should see output indicating the validation process has started, followed by a summary such as "Validation completed successfully" or detailed error messages if issues exist.
+
+Successful execution confirms your installation and configuration are operational. If Valdi cannot find your configuration file, it falls back to default modes to validate with basic rules.
+
+## Troubleshooting Installation Issues
+
+If the `valdi` command is not recognized immediately after installation, it may be because your system’s PATH variable does not include Python’s script directory. Confirm and adjust your PATH accordingly, or try running Valdi explicitly via the Python module:
+
+```bash
+python -m valdi --version
+```
+
+Network restrictions or firewalls can prevent pip from downloading packages. In such environments, downloading the wheel package manually from PyPI and installing locally can be a viable fallback.
+
+<Tip>
+If you encounter permission errors on macOS or Linux, avoid using `sudo pip`. Instead, use the `--user` flag with pip or configure a virtual environment to isolate the installation.
+</Tip>
+
+## What’s Next
+
+Having Valdi installed and verified, you’re ready to configure your validation rules in detail. Explore the [Basic Configuration](/getting-started/first-validation-workflow/basic-configuration) guide to tailor Valdi's behavior to your needs and prepare for your first in-depth validation.
+
+For troubleshooting installation or runtime errors, see [Troubleshooting Setup Issues](/getting-started/first-validation-workflow/troubleshooting-setup-issues).
