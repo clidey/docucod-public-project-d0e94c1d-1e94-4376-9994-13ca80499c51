@@ -1,0 +1,70 @@
+---
+title: "Prerequisites and Requirements"
+description: "Learn about the supported Python versions, system requirements, and any dependencies needed before installing Valdi. This ensures compatibility and prevents issues early in the process."
+---
+
+## Understanding Valdi’s Prerequisites and Requirements
+
+Before installing Valdi, ensuring your environment matches the supported Python versions and system specifications is essential for a smooth setup and reliable operation. This page outlines the necessary software versions, system capabilities, and external dependencies to help you prepare your system adequately, avoiding common compatibility issues.
+
+### Supported Python Versions and Compatibility
+
+Valdi is designed to work seamlessly with specific Python versions to guarantee stability and full functionality. Confirming your Python interpreter matches these supported versions will prevent runtime errors and incompatibilities.
+
+Currently, Valdi supports Python 3.8 and above. Using versions older than Python 3.8 is unsupported and may lead to unpredictable behavior or installation failures. If you have multiple Python versions installed, we recommend creating a dedicated virtual environment using Python 3.8+ to isolate Valdi and its dependencies, ensuring clean operation.
+
+Checking your current Python version is straightforward:
+
+```bash
+python3 --version
+```
+
+This should return `Python 3.8.x` or higher.
+
+### System Requirements and Environment Setup
+
+Valdi requires a modern operating system environment capable of running Python 3.8+. Supported platforms include Linux distributions (Ubuntu 18.04+, CentOS 7+), macOS (10.14 Mojave and later), and Windows 10 or higher with Windows Subsystem for Linux (WSL) for optimal compatibility.
+
+At least 2GB of free RAM is recommended to accommodate Valdi’s processes smoothly, particularly under heavier validation workloads. Additionally, ensure you have administrative or sufficient user privileges to install Python packages and their dependencies.
+
+Network access may be necessary if you plan to download Valdi via pip or integrate with external resources during your validation workflows.
+
+### Dependencies and External Libraries
+
+Valdi depends on a handful of Python libraries that will be installed automatically during setup. These include well-maintained packages for parsing, validation logic, and configuration management.
+
+If you are working in an environment with restricted internet access or custom package repositories, you may need to manually verify the availability of the following core dependencies:
+
+- `requests` (for network communications)
+- `PyYAML` (for configuration parsing)
+- `jsonschema` (for validation tasks)
+
+Managing these dependencies via a virtual environment prevents conflicts and keeps your system organized.
+
+### Preparing for Installation
+
+Ensuring your environment meets these prerequisites minimizes installation errors and operational issues. If you need detailed installation instructions, please proceed to the [Installation Guide](/getting-started/setup-and-installation/installation-guide).
+
+For comprehensive understanding of Valdi’s core concepts and architecture, visit our introductory pages listed in the [Overview section](/overview/getting-started/introduction-product-value).
+
+<Source url="https://github.com/Snapchat/Valdi" paths={[{"path": "setup.py", "range": "1-40"}]} />
+
+---
+
+<Check>
+Confirm your Python environment meets the 3.8+ requirement before proceeding to installation.
+</Check>
+
+<Warning>
+Attempting to install Valdi on unsupported Python versions or incompatible platforms will result in failure or unstable performance.
+</Warning>
+
+### Troubleshooting Common Prerequisite Issues
+
+If you encounter errors indicating missing Python versions or failed dependency installations, verify your environment variables and Python executable paths. Utilizing tools like `pyenv` or `virtualenv` can simplify managing compatible versions.
+
+If network access is limited, consider downloading the required packages in advance or configuring your package manager to use internal mirrors.
+
+---
+
+Valdi’s prerequisites page is your first checkpoint to ensure a frictionless setup experience. By meeting these foundational requirements, you pave the way for successful installation, configuration, and use of Valdi’s powerful validation capabilities.
