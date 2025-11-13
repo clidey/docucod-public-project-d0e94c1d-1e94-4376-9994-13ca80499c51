@@ -1,0 +1,60 @@
+---
+title: "Integration & Use Cases"
+description: "Describes common integration patterns (such as importing Valdi as a library into Python codebases) and typical scenarios where Valdi adds value—like API input validation or schema enforcement. Points to relevant module entry points for quick adoption."
+---
+
+## Integration & Use Cases
+
+Working seamlessly with Python codebases, Valdi empowers developers to embed robust validation logic directly within their applications. This page helps you understand common integration patterns of Valdi, illustrating how to incorporate it as a library and apply it effectively in practical scenarios such as API input validation or enforcing data schemas. By adopting these approaches, you ensure data consistency and reduce runtime errors early in your process.
+
+### What Integration Looks Like and Who Benefits
+
+Valdi is a lightweight, embeddable validation library crafted primarily for Python developers aiming to safeguard their applications against invalid or unexpected data input. Whether you are building web APIs, data ingestion pipelines, or configuration management tools, Valdi’s integration allows you to enforce schema rules dynamically and declaratively within your existing Python environment. If your goal is to shift validation closer to your code and catch errors before they propagate, this page guides you in applying Valdi’s modules with minimal overhead.
+
+### How Valdi Fits Into Your Python Codebase
+
+At its core, Valdi provides a straightforward Python library that you import into your project. Once imported, you interact with its validation classes and functions to define schemas and run validation checks on input data. Typically, this integration pattern involves:
+
+- Importing Valdi’s core modules in your Python code.
+- Defining validation schemas or rules using Valdi’s expressive validators.
+- Applying these schemas to inputs such as HTTP request data, configuration files, or service payloads.
+
+By embedding validation calls where data enters your system, you create a clear flow that rejects invalid inputs early, improving reliability and maintainability.
+
+<Tip>
+A typical use case is to wrap API endpoint handlers with Valdi validation to ensure incoming JSON payloads strictly match expected schemas before business logic executes.
+</Tip>
+
+```python
+import valdi
+
+user_schema = valdi.Schema({
+    'username': valdi.String(min_length=3),
+    'email': valdi.String(pattern=r'^[^@]+@[^@]+\.[^@]+$'),
+    'age': valdi.Integer(min_value=18)
+})
+
+input_data = {'username': 'alice', 'email': 'alice@example.com', 'age': 25}
+
+validated_data = user_schema.validate(input_data)
+print(validated_data)  # This will run without errors if input matches schema
+```
+
+### Applying Valdi in Real-World Scenarios
+
+Imagine handling user-submitted forms or JSON requests where data comes from multiple clients with varying levels of discipline. Valdi enables you to codify rules such as "email must be a valid string," or "age must be at least 18," right next to your business logic, making the validation intent transparent and maintainable. This approach avoids the pitfalls of scattered conditional checks or late-stage error handling.
+
+Another powerful scenario is validating configuration files read at application startup. Instead of relying on manual checks or external tools, integrating Valdi ensures configuration correctness before the app proceeds, reducing deployment failures.
+
+Beyond simple validation, Valdi's modular design allows composition of complex schemas, supporting nested structures and optional fields. This flexibility means you can mirror your domain models precisely and validate inputs with confidence.
+
+### Getting Started with Integration
+
+To begin, review the installation process laid out in the [Installation Guide](/getting-started/setup-and-installation/installation-guide). Then, explore defining your first schemas as introduced in [Basic Configuration](/getting-started/first-validation-workflow/basic-configuration). Following that, the [Your First Validation](/getting-started/first-validation-workflow/your-first-validation) page demonstrates putting these schemas to work in Python.
+
+For quick reference to key entry points, you’ll typically import from `valdi` directly, such as `valdi.Schema`, `valdi.String`, and other validators.
+
+Integrating Valdi is a matter of embedding validation close to your data origin points, giving you early feedback on data quality and enabling smoother downstream processing.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "valdi/schema.py", "range": "10-50"},{"path": "valdi/validators.py", "range": "15-60"}]} />
+
