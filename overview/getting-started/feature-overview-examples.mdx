@@ -1,0 +1,65 @@
+---
+title: "Feature Overview & Example Workflows"
+description: "Summarizes primary Valdi features including reusable validators, type enforcement, and error management. Showcases common workflows with brief, actionable code snippets so users can see typical validation scenarios in action."
+---
+
+## Exploring Valdi’s Core Features Through Practical Workflows
+
+Validation is central to building reliable, scalable applications, and Valdi has been engineered to make this process intuitive, reusable, and robust. On this page, you’ll encounter the primary features that empower Valdi to enforce data integrity, streamline error management, and simplify validator reuse — all demonstrated with practical code examples that connect theory to everyday validation tasks.
+
+## What Valdi Brings to Your Data Validation
+
+At its heart, Valdi offers a powerful set of reusable validators that perform strict type enforcement and manage validation errors gracefully. This combination lets you build comprehensive validation logic that can be shared across modules, ensuring consistent, reliable data quality throughout your application layers. Whether you’re validating user input, API request payloads, or complex nested data structures, Valdi helps you maintain clarity and correctness without boilerplate or convoluted error handling.
+
+Designed for developers who want robust validation without sacrificing developer experience, Valdi fits naturally into modern workflows—especially when you need predictable, actionable feedback on why certain inputs fail and where corrections are needed.
+
+## How Valdi’s Validation Model Operates
+
+The core of Valdi is built around the concept of modular validators that check types and rules at various granularity. Validators can be composed and reused, enabling sophisticated validation logic from simple building blocks. When input data passes through Valdi, it undergoes precise type checks, followed by rule validations, with any violations captured in structured error objects.
+
+This architecture not only enforces correctness but also isolates validation concerns, making your code easier to maintain and extend over time. The error management layer complements this by mapping issues back to specific validators, offering clear diagnostics for user or developer response.
+
+## Capabilities Demonstrated with Real-World Examples
+
+Consider a scenario where you need to validate a user registration form containing fields like username, email, and password. Instead of writing repetitive checks, Valdi lets you define a reusable username validator that enforces length and character rules. The email validator confirms proper formatting and domain checks, while the password validator ensures complexity requirements are met.
+
+Here’s a concise illustration:
+
+```javascript
+import { stringValidator, emailValidator, validate } from 'valdi';
+
+const usernameValidator = stringValidator.minLength(3).maxLength(20);
+const passwordValidator = stringValidator.minLength(8).matches(/^(?=.*[A-Z])(?=.*\d)/);
+
+const userRegistrationSchema = {
+  username: usernameValidator,
+  email: emailValidator,
+  password: passwordValidator,
+};
+
+const result = validate(userRegistrationSchema, {
+  username: 'valUser',
+  email: 'user@example.com',
+  password: 'Secure123',
+});
+
+if (result.isValid) {
+  console.log('All validations passed.');
+} else {
+  console.error('Validation errors:', result.errors);
+}
+```
+
+Beyond form validation, Valdi excels at enforcing types for nested objects or arrays. This ensures that data structures used throughout your application retain integrity without manual deep inspections.
+
+Valdi’s error reporting encourages active handling by giving clear, actionable error messages that let you guide users in correcting their input or debug issues during development efficiently.
+
+## Moving Forward With Your Validation Journey
+
+Starting with Valdi involves a straightforward setup that integrates smoothly into your environment. Once installed, you’ll use reusable validators tailored to your domain needs and gradually build complex validation strategies with confidence.
+
+To quickly jump into implementing validation flows yourself, explore the [Getting Started Guide](/getting-started/first-validation-workflow/your-first-validation) and the [Installation Guide](/getting-started/setup-and-installation/installation-guide) to set up your environment.
+
+By mastering Valdi’s feature set showcased here, you’ll elevate your data validation from error-prone scripts to maintainable, transparent, and reusable logic trusted across your projects.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "src/validators/stringValidator.js", "range": "1-45"},{"path": "src/core/validationEngine.js", "range": "10-80"}]} />

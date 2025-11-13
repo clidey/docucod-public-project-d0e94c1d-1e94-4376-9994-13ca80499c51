@@ -1,0 +1,82 @@
+---
+title: "Basic Configuration"
+description: "Set up your first validation schema and learn how to configure Valdi for typical workflows. This lays the groundwork for effective validation."
+---
+
+## Establishing Your Validation Schema with Basic Configuration
+
+Setting up Valdi begins by defining your first validation schema—a structured blueprint that dictates how your data should be checked and verified. This foundational step ensures your validation workflows are tailored, precise, and effective. By configuring Valdi according to your data requirements, you gain control over what constitutes valid input and how inconsistencies are identified early in your process.
+
+### Defining Your Validation Schema
+
+The heart of Valdi's configuration lies in specifying the schema that reflects your data's structure and validation logic. A schema typically includes field names and the rules each must satisfy, such as data types, required presence, or custom constraints.
+
+To start, create a configuration file that outlines these rules in a clear format. This schema serves as a contract between your data's expected form and the validation engine that applies these checks.
+
+Once defined, this schema becomes the central reference for all your validation tasks, enabling Valdi to systematically verify data integrity against your criteria.
+
+### Key Configuration Elements
+
+Your configuration should cover several critical areas to tailor the validation behavior effectively:
+
+- **Field Definitions**: Specify the name and data type of every field you intend to validate.
+- **Validation Rules**: Assign constraints such as required fields, formats, ranges, or enumerations.
+- **Error Handling Preferences**: Decide how Valdi reports validation failures (e.g., collecting all errors vs. fail-fast).
+
+For example, a minimal JSON snippet defining a user entity might look like this:
+
+```json
+{
+  "username": {"type": "string", "required": true},
+  "email": {"type": "string", "format": "email"},
+  "age": {"type": "integer", "minimum": 18}
+}
+```
+
+This schema declares that 'username' is mandatory as a string, 'email' must adhere to email formatting, and 'age' must be an integer of at least 18.
+
+### Integrating the Schema into Valdi
+
+After crafting your schema, incorporate it into Valdi's configuration through the designated file or initialization parameters. This setup informs Valdi where to find the schema and how to load it during validation runs.
+
+Ensure that the schema file is accessible by the validation engine and that your application points to its path correctly in the configuration settings.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "config/schema.json", "range": "1-20"}]} />
+
+### Verifying Your Configuration
+
+Before proceeding to validate data, it is essential to confirm that your schema loads without errors. Running a configuration check command or a simple validation with sample input will reveal whether the schema is well-formed and correctly referenced.
+
+<Steps>
+<Step title="Check schema syntax">
+Use a JSON linting tool or a schema validation utility to ensure your configuration file is free from syntax errors.
+</Step>
+<Step title="Load schema in Valdi">
+Start Valdi with your configuration and observe the startup logs for successful schema loading confirmation.
+</Step>
+<Step title="Perform test validation">
+Run a validation command using sample data matching your schema to verify expected successes and failures.
+</Step>
+</Steps>
+
+A successful configuration will produce log entries confirming schema recognition and output results consistent with your validation rules.
+
+<Tip>
+If the validation fails unexpectedly, review your field definitions for matching data types and confirm all required fields are present in the test data.
+</Tip>
+
+### Best Practices for Basic Configuration
+
+Start simple by validating core fields and progressively add complexity to your schema. Modularize your configuration files if your data model grows and separate concerns for better maintainability.
+
+Clear and descriptive error reporting settings help in quickly pinpointing validation issues during early testing phases.
+
+Minimal, explicit definitions reduce ambiguity, making it easier to update and debug your configurations. Keep the schema and workflow aligned with your data intake process to maximize validation effectiveness.
+
+### Moving Forward
+
+With your basic configuration in place, you are ready to advance to actual data validation workflows. Explore how Valdi applies your schema rules to real datasets, monitors validation outcomes, and integrates into your application's lifecycle.
+
+Continue learning about your first validation operation in the [Your First Validation](/getting-started/first-validation-workflow/your-first-validation) guide or troubleshoot setup issues using [Troubleshooting Setup Issues](/getting-started/first-validation-workflow/troubleshooting-setup-issues).
+
+Understanding and mastering the basic configuration ensures that your use of Valdi is precise, reliable, and tailored to your actual validation needs.

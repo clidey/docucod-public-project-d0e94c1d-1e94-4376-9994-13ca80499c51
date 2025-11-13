@@ -1,0 +1,84 @@
+---
+title: "Troubleshooting Setup Issues"
+description: "Identify and resolve common setup and first-run problems, such as import errors or configuration missteps. Provides practical guidance for new users to get unstuck quickly."
+---
+
+## Troubleshooting Setup Issues
+
+Getting started with Valdi can occasionally present challenges, especially during initial installation and configuration. This page focuses on identifying and resolving the most common setup obstacles, such as import errors, configuration missteps, and runtime issues, to ensure you can move quickly from installation to your first successful validation.
+
+### Encountering Import and Dependency Errors
+
+If Valdi fails to start or you see import-related errors, this often indicates missing or mismatched dependencies. Verifying the Python environment and installed packages is your first step. Ensure that you have installed Valdi within a virtual environment dedicated to your project to prevent conflicts with other Python packages. Import errors may also occur if Python's `PATH` is misconfigured or if there is a version mismatch.
+
+Begin by confirming your Python version matches Valdi’s requirements, visible in the [Prerequisites and Requirements](/getting-started/setup-and-installation/prerequisites-and-requirements) page. Then, validate that Valdi and its dependencies are installed successfully:
+
+<Steps>
+<Step title="Check Python Version">
+Run `python --version` or `python3 --version` and confirm compatibility.
+</Step>
+<Step title="Verify Installation">
+Use `pip show valdi` to check that Valdi is installed in your active environment.
+</Step>
+<Step title="Reinstall Dependencies">
+If errors persist, reinstall using `pip install --force-reinstall valdi` within your virtual environment.
+</Step>
+</Steps>
+
+<Warning>
+Avoid mixing system-wide Python installations with virtual environments to reduce conflicts and permission errors.
+</Warning>
+
+### Correcting Configuration Missteps
+
+Valdi requires precise configuration parameters to operate smoothly. Typical mistakes include incorrect path references in the configuration file or missing mandatory fields. Config files are typically YAML or JSON and specify parameters like data sources, validation rules, and output locations.
+
+Focus on validating the essential keys like `schema_path`, `validation_rules`, and `output_directory`. An omitted or improperly formatted key can cause silent failures or runtime errors.
+
+To identify configuration issues:
+
+- Validate your config file syntax with a YAML/JSON linter.
+- Cross-check required keys in your config against the examples in the [Basic Configuration](/getting-started/first-validation-workflow/basic-configuration).
+- Simplify the config to a minimal working example before incrementally adding complexity:
+
+```yaml
+schema_path: ./schemas/schema.json
+validation_rules: ./rules/rules.yaml
+output_directory: ./validation_results
+```
+
+Ensuring this basic structure will help isolate errors related to configuration parsing or file access permissions.
+
+### Resolving Runtime Errors on First Validation
+
+When you run your initial validation, unexpected runtime errors can occur due to environment issues or misconfigured inputs. Pay close attention to error messages; they often pinpoint missing files, inaccessible paths, or data format inconsistencies.
+
+If you encounter a failure, try these steps:
+
+1. Confirm that all referenced files exist and paths are correct relative to your working directory.
+2. Review permission settings and ensure Valdi has read access to input files and write access to output locations.
+3. Run the validation command with verbose or debug logging enabled (e.g., `valdi validate --verbose`) to obtain detailed output.
+
+<Steps>
+<Step title="Verify File Paths and Permissions">
+List contents with `ls -l` or `dir` to confirm visibility and access.
+</Step>
+<Step title="Run Validation with Verbose Logging">
+Execute `valdi validate --verbose` and watch for error details.
+</Step>
+<Step title="Inspect Log Files">
+Check any created logs in your output directory for clues.
+</Step>
+</Steps>
+
+<Tip>
+A common pitfall is relative path confusion. Use absolute paths or run commands from the project root to avoid referencing issues.
+</Tip>
+
+### When to Seek Further Help
+
+If issues persist after these steps, check for updates or known issues in Valdi’s GitHub repository. Reporting detailed error messages and context will accelerate community or team support.
+
+Refer to the [Installation Guide](/getting-started/setup-and-installation/installation-guide) for reinstallation instructions and the [Your First Validation](/getting-started/first-validation-workflow/your-first-validation) page for a walkthrough of successful validation execution.
+
+<Source url="https://github.com/Snapchat/Valdi" paths={[{"path": "docs/getting-started/first-validation-workflow/troubleshooting-setup-issues.md", "range": "1-60"}]} branch="main" />

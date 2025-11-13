@@ -1,0 +1,71 @@
+---
+title: "Error Handling and Validation Errors"
+description: "Explains Valdi's error system, including the structure of validation errors, how exceptions are raised and caught, and best practices for surfacing validation failures to end users."
+---
+
+## Understanding Valdi's Error Handling and Validation Errors
+
+When integrating Valdi into your workflows, one of your primary concerns will be how to detect, manage, and effectively communicate validation problems. Valdi's error handling system is designed to provide clear, structured feedback on where and why a validation failed, enabling your application to respond appropriately and convey useful information to end users. Rather than leaving you to guess, Valdi surfaces errors in a consistent format that you can catch, analyze, and translate into meaningful messages.
+
+### How Valdi Structures Validation Errors
+
+At the core of Valdi’s error system is the `ValidationError` object, which encapsulates detailed information about a failure during validation. Each `ValidationError` describes the nature of the problem, the specific validation rule that failed, and the exact input field involved. This structure allows you to precisely pinpoint issues without ambiguity.
+
+Validation errors are often grouped, especially when multiple fields fail simultaneously. This grouping facilitates batch processing of errors or showing aggregated feedback to users. Importantly, Valdi distinguishes errors by types such as type mismatches, missing required fields, or constraint violations, enabling tailored handling for different error categories.
+
+For example, a typical validation failure may look like this in code:
+
+```python
+try:
+    validator.validate(input_data)
+except ValidationError as err:
+    # err.errors contains detailed error info
+    handle_errors(err.errors)
+```
+
+This pattern shows how validations raise exceptions you can handle gracefully.
+
+### Exceptions: Raising and Catching Validation Failures
+
+Valdi employs exception-based error reporting for its validation outcomes, meaning that when input does not conform to the specified schema or rules, a `ValidationError` is raised immediately. This exception will interrupt normal execution unless it’s caught, allowing your application to branch logically based on success or failure.
+
+You should wrap calls to validation methods inside try-except blocks to intercept these exceptions. Doing so lets you perform contextual error reporting or corrective measures. For instance, you might want to log validation details for debugging, or format error messages to display within your application's forms.
+
+This approach contrasts with returning error objects silently; exceptions enforce a clear contract that validation must pass or be explicitly handled, which promotes robust integration.
+
+### Best Practices for Presenting Errors to Users
+
+Translating raw validation errors into user-friendly messages is crucial. Valdi facilitates this by providing structured error details including error codes, messages, and involved fields, which you can map to your UI elements.
+
+When surfacing validation failures, consider the following tips:
+
+- **Provide contextual guidance**: Tie error messages directly to the relevant input fields to reduce user confusion.
+- **Be clear and actionable**: Explain why the input failed validation and suggest how to fix it.
+- **Aggregate errors thoughtfully**: Do not overwhelm users with too many messages at once; instead prioritize critical issues or provide progressive feedback.
+- **Localize messages**: Use Valdi's error codes to support multi-language environments by mapping to translated strings.
+
+For example, after catching a `ValidationError`, you could iterate through its error details and display messages like “Email must be a valid address” adjacent to the email input field.
+
+<Tip>
+Always validate and handle errors on both client and server sides to maintain data integrity and provide a seamless user experience.
+</Tip>
+
+### Common Pitfalls and Troubleshooting
+
+A frequent mistake is failing to catch validation exceptions, which causes unhandled errors and potentially crashes the application. Always ensure validations are enclosed in try-except to maintain control flow.
+
+Another issue arises when error details are not parsed or displayed correctly. Since Valdi returns structured error objects, extracting nested messages or fields may require careful handling depending on your programming environment.
+
+In case of ambiguous failures, verify that your validation schema precisely matches expected input formats and constraints. Misalignments can cause unexpected `ValidationError`s.
+
+If errors seem inconsistent or missing, confirm that your validation logic is triggered as intended, and inspect the error object’s content to understand the failure root cause.
+
+<Note>
+For advanced error inspection, explore Valdi's error schemas within the source code to tailor error handling logic deeply.<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "valdi/errors.py", "range": "10-75"}]} />
+</Note>
+
+### Summary
+
+Valdi’s error handling system empowers you to trap validation failures reliably by raising structured exceptions detailing the exact issues encountered. By understanding and implementing appropriate catch blocks, you convert these failures into actionable insights for users, improving both data quality and user satisfaction. Applying best practices in error presentation ensures your application communicates clearly, helping users resolve input problems efficiently.
+
+To continue your integration journey, explore Valdi’s [Validator Classes and Functions](/api-reference/core-api/validators) for defining your schemas, and refer to [Quickstart and Code Snippets](/api-reference/usage-examples/quickstart-snippets) for practical examples on implementing validation and error handling workflows.

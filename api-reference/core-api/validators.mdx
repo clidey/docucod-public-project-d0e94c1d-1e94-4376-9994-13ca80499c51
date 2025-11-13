@@ -1,0 +1,94 @@
+---
+title: "Validator Classes and Functions"
+description: "Detailed documentation of all public validator classes and functions available in Valdi. Includes usage examples and explanations of how to define, configure, and use validators for different data types and custom validation logic."
+---
+
+## Validator Classes and Functions
+
+In Valdi, validators are the core building blocks for ensuring your data meets specific quality rules and constraints before processing it further. This page presents a detailed guide to all public validator classes and functions available, explaining how to configure and use them effectively across various data types and custom validation needs. Whether you are validating user inputs, data streams, or API payloads, understanding these validators enables you to integrate robust data validation seamlessly into your workflows.
+
+### Understanding Validators and Their Role
+
+At its essence, a validator in Valdi is a self-contained component that checks if a piece of data conforms to a particular rule or set of rules. You define what "valid" means by choosing or composing these validators based on your requirements—ranging from validating simple types like strings and numbers to complex conditions involving cross-field logic.
+
+This framework of validators empowers you to structure your validation logic clearly and reuse components consistently, drastically reducing errors and improving data integrity. Each validator class exposes methods and properties that allow fine-tuned control over validation behavior and detailed error reporting.
+
+### Core Validator Classes
+
+Valdi’s public API offers a robust set of validator classes designed to cover common validation scenarios. Each class represents a specific validation category, encapsulating related logic and options:
+
+- **StringValidator**: Validates text inputs for length, pattern matching (e.g., regex), format, and content.
+- **NumberValidator**: Checks numeric values for ranges, precision, and integer/decimal constraints.
+- **DateValidator**: Ensures date and time values comply with required formats, ranges, or relative time conditions.
+- **BooleanValidator**: Validates true/false values reliably.
+- **ArrayValidator**: Verifies collections, including element types and length constraints.
+- **ObjectValidator**: Provides validation rules for JSON objects, including required fields and nested validations.
+
+Each validator comes with configurable parameters for flexible validation scenarios. For example, `StringValidator` can enforce minimum/maximum length, pattern compliance, or disallow certain characters.
+
+### Defining Custom Validators and Composing Logic
+
+Beyond standard validators, Valdi facilitates creating your own custom validators for scenarios unique to your application logic. Custom validators allow you to incorporate domain-specific rules or leverage external validation services.
+
+Moreover, Valdi supports combining multiple validators in logical compositions—using AND, OR, and NOT operations—enabling sophisticated validation workflows. This composition system helps you build layered validation that fits complex business logic without clutter or duplication.
+
+### Using Validators in Practice
+
+Integrating validators into your code involves initializing validator instances with your rules and invoking them against your data. The result indicates success or failure, alongside detailed error information if validation fails.
+
+Below is a simple example that validates a user object with a string username and a numeric age:
+
+```javascript
+import { StringValidator, NumberValidator, ObjectValidator } from 'valdi';
+
+const usernameValidator = new StringValidator({ minLength: 3, maxLength: 15, pattern: /^[a-zA-Z0-9_]+$/ });
+const ageValidator = new NumberValidator({ min: 18, max: 120, integer: true });
+
+const userValidator = new ObjectValidator({
+  username: usernameValidator,
+  age: ageValidator,
+});
+
+const data = { username: 'user_123', age: 25 };
+const result = userValidator.validate(data);
+
+if (result.isValid) {
+  console.log('User data passed validation');
+} else {
+  console.error('Validation errors:', result.errors);
+}
+```
+
+This example illustrates defining validators with specific constraints, combining them into a structure, and interpreting the validation outcome.
+
+### Best Practices for Validator Usage
+
+To leverage validators efficiently in your projects, consider these best practices:
+
+- **Start Simple, Then Enhance**: Begin with basic validators and gradually add constraints as your validation requirements refine.
+- **Reuse Validator Instances**: Define validators once and reuse them to maintain consistency and reduce overhead.
+- **Handle Validation Errors Thoughtfully**: Use the detailed error messages provided to inform users or trigger corrective actions.
+- **Combine Logical Validators for Complex Rules**: Use provided combinators to build expressive rules without writing redundant code.
+- **Leverage Custom Validators for Domain-Specific Needs**: Extend the framework when standard validators don’t fully capture your requirements.
+
+### Troubleshooting Common Validation Issues
+
+Occasionally, you may encounter issues such as validators not triggering as expected or overly permissive validation results. These typically arise from misconfigured constraints or overlooked data formats.
+
+If a validator is passing invalid data:
+- Double-check pattern syntax and range boundaries.
+- Confirm data types match those expected by validators.
+
+If errors seem ambiguous or missing:
+- Enable detailed error reporting modes if available.
+- Validate individual fields separately to isolate problematic rules.
+
+These steps help ensure the validation logic behaves predictably across different data inputs.
+
+### Further Exploration
+
+For practical code snippets and quick integration examples, refer to the [Quickstart and Code Snippets](/api-reference/usage-examples/quickstart-snippets) page. This will accelerate your implementation process by demonstrating typical use cases in real environments.
+
+Understanding and mastering Valdi’s validator classes is fundamental to establishing reliable data integrity checks throughout your services. With the combinable and extensible validation structures Valdi offers, you can confidently enforce rules that keep your applications consistent and secure.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "src/api/validators.js", "range": "1-120"}]} />

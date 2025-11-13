@@ -1,0 +1,88 @@
+---
+title: "Your First Validation"
+description: "Run a basic validation using Valdi, interpreting outputs and handling errors. Follow a concrete Python code example to validate sample data, building confidence with Valdi’s workflow."
+---
+
+# Your First Validation
+
+Starting your journey with Valdi means discovering how effortlessly you can validate data using a straightforward Python example. This guide will walk you through running a basic validation, interpreting the results, and managing any errors you encounter. By following this practical workflow, you'll build confidence with Valdi’s core functionality and understand how it can ensure data quality in your projects.
+
+## Running a Basic Validation
+
+To begin validating data with Valdi, you will use a Python script that loads sample data, applies validators, and interprets the results in real-time. This initial run demonstrates Valdi’s approach to catching inconsistencies, confirming correctness, and reporting errors clearly.
+
+Start by preparing your Python environment with Valdi installed (refer to the [Installation Guide](/getting-started/setup-and-installation/installation-guide) if you haven't done so). Once ready, the following example uses Valdi’s API to run a simple validation on sample input data:
+
+<Steps>
+<Step title="Import Valdi and Prepare Data">
+Create a Python script and import Valdi’s validation classes. Define a sample data dictionary representing values you want to validate.
+
+```python
+from valdi import Validator
+
+sample_data = {
+    'age': 25,
+    'email': 'user@example.com',
+    'username': 'valdiUser2024'
+}
+```
+</Step>
+
+<Step title="Define Validation Rules">
+Specify validation criteria for each field, such as type constraints, required fields, or format checks. This step tailors Valdi’s checks to your data expectations.
+
+```python
+rules = {
+    'age': {'type': int, 'min': 18, 'max': 99},
+    'email': {'type': str, 'pattern': r'^[^@]+@[^@]+\.[^@]+$'},
+    'username': {'type': str, 'min_length': 5}
+}
+validator = Validator(rules)
+```
+</Step>
+
+<Step title="Execute the Validation">
+Run the validator against your data. Valdi processes each rule and generates a report that highlights valid fields, warnings, or errors.
+
+```python
+result = validator.validate(sample_data)
+print(result.summary())
+```
+Expected output should summarize validation success, listing valid and invalid fields.
+</Step>
+
+<Step title="Review Validation Output">
+Interpret the `result`. It includes details about which fields passed validation and which failed, along with error messages explaining why.
+
+```python
+if not result.is_valid():
+    for error in result.errors:
+        print(f"Error in {error.field}: {error.message}")
+else:
+    print("All validations passed successfully.")
+```
+</Step>
+</Steps>
+
+## Understanding Validation Results and Errors
+
+Valdi’s output delivers both a high-level summary and field-specific messages that explain any failed validations. This clarity ensures you can quickly diagnose and fix data inconsistencies. A success message confirms the data meets all specified criteria. Error messages identify the field, the rule violated (such as type mismatch or missing values), and a human-readable explanation.
+
+Interpreting these results helps you improve data quality before integrating it deeper into your workflow. Early error detection saves time and prevents unexpected issues downstream.
+
+<Tip>
+Common errors include pattern mismatches for fields like emails or type conflicts in numeric inputs. Ensure your validation rules accurately reflect your data format.
+</Tip>
+
+## Next Steps: Building on Your First Validation
+
+Completing this first validation sets the stage for more sophisticated workflows. After mastering this example, explore how to customize configuration in the [Basic Configuration](/getting-started/first-validation-workflow/basic-configuration) page, or troubleshoot setup problems in [Troubleshooting Setup Issues](/getting-started/first-validation-workflow/troubleshooting-setup-issues).
+
+You can also deepen your understanding of Valdi’s validators and error handling in the API reference sections:
+
+- [Validator Classes and Functions](/api-reference/core-api/validators)
+- [Error Handling and Validation Errors](/api-reference/core-api/error-handling)
+
+This progression will equip you to apply Valdi confidently to your own data validation challenges.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{"path": "examples/basic_validation.py", "range": "1-40"}]} />
