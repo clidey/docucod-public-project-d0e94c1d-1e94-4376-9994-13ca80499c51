@@ -1,0 +1,121 @@
+---
+title: "Quickstart and Code Snippets"
+description: "Step-by-step code examples showing how to get started with Valdi: importing the library, setting up validation workflows, and handling output/results. Designed for rapid onboarding and practical learning."
+---
+
+# Quickstart and Code Snippets
+
+Valdi is designed to streamline your data validation workflows from the moment you start integrating it into your application. This guide walks you through essential code examples that demonstrate how to import the library, configure your first validator, and interpret validation results. Whether you are building a simple data checker or integrating complex validation scenarios, these snippets will rapidly bring you up to speed and empower you to embed robust validation with confidence.
+
+## Getting Started with Valdi
+
+Begin by incorporating Valdi into your project. The library exposes a clean interface to define validation rules, execute validations, and handle outcomes. Importing Valdi is straightforward and sets the foundation for your validation workflows.
+
+```javascript
+import { Validator, ValidationResult } from 'valdi';
+```
+
+This import gives you access to the core Validator class and the ValidationResult object you'll work with to capture validation responses.
+
+Next, configure your first validation logic. Imagine you want to check that a user's email field is present and formatted correctly. You create a validator rule that expresses this expectation, then run it against your input data.
+
+```javascript
+const validator = new Validator({
+  email: {
+    required: true,
+    format: 'email'
+  }
+});
+
+const inputData = { email: 'user@example.com' };
+const result = validator.validate(inputData);
+
+if (result.isValid) {
+  console.log('Validation succeeded');
+} else {
+  console.error('Validation failed:', result.errors);
+}
+```
+
+This example highlights Valdi’s expressive, declarative approach: define your rules once and apply them repeatedly without re-implementing your checks. The `validate` method returns a `ValidationResult` instance, which offers a clear API to inspect whether the data passed and to retrieve meaningful error details when it does not.
+
+## Handling Validation Output
+
+Understanding what happens when validation runs is crucial for delivering reliable user feedback or triggering downstream processes. Valdi provides structured details about each violation found.
+
+The `ValidationResult` object contains an `isValid` flag and an `errors` array, where each error includes the field name, the violated rule, and a descriptive message. For example:
+
+```json
+{
+  "isValid": false,
+  "errors": [
+    {
+      "field": "email",
+      "rule": "format",
+      "message": "Email must be a valid email address"
+    }
+  ]
+}
+```
+
+This output format allows your application to provide users with specific, actionable feedback—helping them quickly correct input mistakes.
+
+<Tip>
+Leverage the `errors` array to dynamically generate user-friendly error messages in your UI or logs. This reduces guesswork and speeds up issue resolution.
+</Tip>
+
+## Expanding Your Validation Capabilities
+
+As your needs grow, Valdi supports adding more complex validations such as nested objects, arrays, or custom logic. The initial setup is simple, and subsequent enhancements follow the same pattern of rule definition and invocation.
+
+Here’s an example adding nested validation for a user profile containing an address:
+
+```javascript
+const validator = new Validator({
+  name: { required: true },
+  profile: {
+    address: {
+      street: { required: true },
+      zipcode: { format: 'zipcode' }
+    }
+  }
+});
+
+const inputData = {
+  name: 'Alice',
+  profile: {
+    address: { street: '', zipcode: '1234' }
+  }
+};
+const result = validator.validate(inputData);
+
+if (!result.isValid) {
+  console.log(result.errors);
+}
+```
+
+This snippet demonstrates how you can scale validation as your data structures grow without losing clarity or control.
+
+## Troubleshooting and Best Practices
+
+If you encounter unexpected validation results, ensure your rules match your data shape exactly. Because Valdi validates according to the schema you specify, discrepancies between data and rule definitions are a common source of confusion.
+
+Always start with a minimal rule set and incrementally add complexity. This stepwise approach helps isolate issues and builds confidence as you expand functionality.
+
+<Warning>
+Applying overly broad or conflicting rules simultaneously can cause confusing errors. Take advantage of incremental testing and clear rule structures.
+</Warning>
+
+## Next Steps
+
+After you’ve mastered these basics, explore how to:
+
+- Customize error messages for better UX
+- Integrate Valdi with your backend or frontend application logic
+- Use Valdi’s advanced validator classes for asynchronous or conditional validations
+
+For more foundational system information, consult the [Core Concepts and Terminology](/overview/getting-started/core-concepts-terminology) and deepen your understanding of validation lifecycles through the [Feature Overview & Example Workflows](/overview/getting-started/feature-overview-examples).
+
+For practical installation details, visit [Installation Guide](/getting-started/setup-and-installation/installation-guide).
+
+<Source url="https://github.com/Snapchat/Valdi" paths={[{"path": "src/validator.js", "range": "10-60"},{"path": "src/validationResult.js", "range": "1-40"}]} />
