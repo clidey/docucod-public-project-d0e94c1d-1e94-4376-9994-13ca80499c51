@@ -1,0 +1,65 @@
+---
+title: "What is Valdi? Product Introduction & Value"
+description: "Presents a high-level overview of the Valdi library, focusing on the benefits it brings to Python projects through robust validation. It clarifies the core problems Valdi solves, such as data reliability and ease of schema enforcement, and outlines its niche as a foundation for safe, maintainable validation flows."
+---
+
+## Discovering Valdi: Your Foundation for Reliable Python Validation
+
+In any Python project that handles complex data, ensuring that inputs conform to expectations is crucial. Valdi addresses this fundamental need by providing a robust validation library designed to enforce schema rules simply and effectively. It empowers developers to build reliable, maintainable workflows where data integrity is guaranteed, minimizing runtime errors and ensuring consistency.
+
+This dependable foundation allows you to focus on what really matters: crafting your application's core logic with confidence, knowing Valdi is safeguarding your data at every step.
+
+## What Valdi Is and Who Benefits Most
+
+Valdi is a Python library designed for data validation that makes enforcing rules on your data effortless and consistent. It transforms the often repetitive, error-prone task of writing validation logic into a clear and maintainable process. By encapsulating complex validation flows into reusable schemas and validators, Valdi provides a stable backbone to prevent invalid data from polluting your application.
+
+Whether you’re a backend developer handling user input, a data engineer managing ingestion pipelines, or a software architect aiming to enforce contractual data standards, Valdi fits seamlessly into your workflow. Its ease of integration and focus on robustness make it invaluable in environments where safeguarding data correctness is non-negotiable.
+
+## How Valdi Works at a Glance
+
+At its core, Valdi uses a schema-driven model that allows you to declare explicit validation logic for your data structures. When data passes through Valdi, it undergoes a systematic process where each element is checked against these rules. This layered approach ensures that no invalid data slips through unnoticed.
+
+The core architecture centers on validator classes that represent different types of checks—ranging from simple type validations to complex, user-defined constraints. When data is validated, these classes work together to traverse your data structures, applying each rule as specified, and then aggregate any errors for immediate feedback.
+
+This approach streamlines validation into a single coherent flow, eliminating the scattering of validation code and reducing both bugs and confusion.
+
+## Valdi in Action: Driving Confidence in Your Workflows
+
+Imagine you’re developing a web service that receives user profile data. Using Valdi, you create a schema that defines required fields like email addresses, age ranges, and optional phone numbers with precise validation rules. When new profiles arrive, Valdi instantly identifies missing or malformed data, preventing bad input from reaching deeper layers.
+
+This immediate and clear feedback enables faster iterations and smoother user experiences. In another scenario, a data pipeline ingesting sensor readings can rely on Valdi to enforce value ranges and data types before persisting, ensuring analytics algorithms always operate on clean, trustworthy data.
+
+A simple example of schema validation looks like this:
+
+```python
+from valdi import Validator, String, Integer, Optional
+
+class UserProfileValidator(Validator):
+    email = String().email_address()
+    age = Integer().min(18).max(120)
+    phone = Optional(String().pattern(r"^\+?[1-9]\d{1,14}$"))
+
+# Validate incoming data
+validator = UserProfileValidator()
+result = validator.validate({
+    'email': 'user@example.com',
+    'age': 30
+})
+
+if result.is_valid:
+    print('Data is valid and clean.')
+else:
+    print('Validation failed:', result.errors)
+```
+
+This snippet highlights how straightforward it is to embed complex validation semantics within a readable and maintainable structure.
+
+## Preparing to Use Valdi and Next Steps
+
+Getting started with Valdi is designed to be smooth. After installing the library, you define your validation schemas and incorporate them in your data processing workflows. To set things up properly, review prerequisites regarding Python versions and dependencies.
+
+Once set up, you can dive into creating your first validators and progressively enhance your application's data safety. For guided steps on installation and initial configuration, refer to the [Installation Guide](/getting-started/setup-and-installation/installation-guide) and [Basic Configuration](/getting-started/first-validation-workflow/basic-configuration).
+
+These resources will help you establish a solid baseline, after which more advanced validation patterns and integration techniques await exploration.
+
+<Source url="https://github.com/Snapchat/Valdi" branch="main" paths={[{ path: "README.md", range: "1-50" }, { path: "valdi/validator.py", range: "10-80" }]} />
